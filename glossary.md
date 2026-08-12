@@ -1,0 +1,73 @@
+# Glossary
+
+Every concept used across the project, written in plain language.
+One section per script, growing as we go.
+
+## 00_common_ideas.py
+
+Concepts that are used in (almost) every script.
+
+- **MP3 (audio file)** — a song saved on disk in a *compressed* format. The computer can't play a file directly; it first *decodes* it into raw numbers.
+- **Decoding (loading)** — turning the compressed file back into a long list of amplitude numbers. `librosa.load()` does this.
+- **librosa** — a Python library for audio/music analysis. It loads audio and computes all the features in this project.
+- **numpy array** — Python's high-performance list of numbers. Audio samples live in one of these.
+
+## 01_metadata.py
+
+What the file itself tells us about the song, before any math.
+
+- **Amplitude** — the loudness of the air pressure at one instant. Each sample value (`y[i]`) is one amplitude, in the range roughly −1 to +1.
+- **Sample** — one single amplitude measurement. The song is 4,349,376 samples.
+- **Sample rate (`sr`)** — how many amplitude measurements we take per second (22,050). Sets time resolution: the more samples per second, the finer we slice time — and the higher the pitch we can represent.
+- **Duration** — total length in seconds: `num_samples / sample_rate` (4,349,376 / 22,050 = 197.25 s).
+- **Mono / channels** — librosa always combines left+right into a single channel (mono) for simplicity.
+- **Compression / lossy** — MP3 throws away data our ears barely hear, so the *file on disk* (2.39 MB) is much smaller than the *decoded raw samples* (16.6 MB if stored as 32-bit floats). That's the 7× ratio. The decoded sound is an *approximation* of the original, not identical.
+- **`y` and `sr`** — the two things `librosa.load(path)` returns: `y` = the array of sample amplitudes; `sr` = the sample rate that tells us how to interpret those numbers (each index = 1/22050 of a second).
+
+## 02_waveform.py
+
+What the raw sound *looks* like.
+
+- **Waveform** — a graph of amplitude over time. x-axis = seconds, y-axis = amplitude (−1 to +1). The shape of the line *is* the sound, drawn instead of played.
+- **Peaks** — the loudest single samples (≈ +1.01 / −1.05 here). Digital audio is bounded near ±1.
+- **Silence** — near-zero amplitude (the first 15 samples were all 0.0000 — the song starts silent). Shows up as a flat line at 0 on the plot.
+- **`librosa.times_like(y, sr=sr)`** — builds an array of *seconds* values (one per sample) so we can plot time on the x-axis instead of raw sample indices.
+- **RMS** — Root Mean Square: the average loudness. 0.256 here means the song is "medium loud" overall. (How this is computed *per moment* is step 3.)
+- **Reading the plot** — flat line = quiet, tall squiggles = loud. The loud/quiet sections of the song are visible as the shape's thickness.
+
+## 03_rms_energy.py
+
+Loudness as a curve over time, not one flat average.
+
+- **RMS (Root Mean Square)** — one number summarizing a frame's loudness: `sqrt(mean(frame²))`. Square each sample (kills negatives so louder samples dominate), average, then square-root back to amplitude units. 0.256 overall; up to 0.434 at the loudest moment.
+- **Framing (windowing)** — chopping the 197 s of audio into short overlapping chunks called frames, so we get one loudness value *per moment* instead of for the whole song. Without frames, we'd only have a single average.
+- **frame_length** — samples per window (2,048 ≈ 93 ms at 22,050 Hz).
+- **hop_length** — how many samples each window steps forward (1,024 ≈ 46 ms). Hop < frame = **50% overlap**, which smooths the curve (adjacent frames share half their samples).
+- **Envelope** — the resulting per-time curve of RMS values (4,246 frames → one per ~46 ms). "How loud, moment by moment."
+- **frames_to_time** — converts a frame index into seconds (`index × hop / sr`) so we can plot the envelope on the time axis.
+- **center (zero-padding)** — librosa's `center=True` pads the signal (by frame_length/2) so frames align on the timeline; we used `center=False` so frames start at sample 0. The 2-frame count difference and the shifted comparison (0.25 diff) were both symptoms of this.
+- **sliding_window_view** — numpy's way of cutting many overlapping windows at once (one row per window), the vectorized trick behind the hand-written `rms_by_hand`.
+
+## 04_zero_crossings.py
+
+*(not yet built)*
+
+## 05_spectrogram.py
+
+*(not yet built)*
+
+## 06_features.py
+
+*(not yet built)*
+
+## 07_eda.py
+
+*(not yet built)*
+
+## 08_visualize.py
+
+*(not yet built)*
+
+## 09_summary.py
+
+*(not yet built)*
