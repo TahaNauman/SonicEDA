@@ -1,0 +1,8 @@
+librosa
+av
+numpy
+pandas
+matplotlib
+scipy
+seaborn
+pytest

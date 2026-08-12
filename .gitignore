@@ -1,0 +1,27 @@
+# Audio files
+*.mp3
+*.wav
+*.flac
+*.m4a
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+*.so
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Generated plots/results
+plots/*.png
+plots/*.pdf
+plots/*.svg
+plots/*.html
