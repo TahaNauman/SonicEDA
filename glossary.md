@@ -50,7 +50,14 @@ Loudness as a curve over time, not one flat average.
 
 ## 04_zero_crossings.py
 
-*(not yet built)*
+How often the signal flips sign — a cheap brightness/timbre measurement.
+
+- **Zero crossing** — the signal switching from positive to negative amplitude (or vice versa). Count them to gauge how fast the signal oscillates.
+- **Brightness proxy** — high-frequency/fizzy/noisy sounds cross zero often; low/warm/tonal sounds cross rarely. ~2,291 sign flips per second here = a busy, moderately bright signal.
+- **`(y[:-1] > 0) != (y[1:] > 0)`** — the one-line trick: compare each sample's sign to its neighbor's; `!=` is True exactly where the sign flips.
+- **Rate vs count** — `flips.mean()` divides by the number of samples, so the number is comparable across different-length audio (crossings *per sample*). `rate × sr` converts to crossings *per second*.
+- **threshold / pad (librosa's knobs)** — librosa's `zero_crossings` by default ignores flips that stay under a tiny magnitude (`threshold=1e-10`) and pads frame edges (`pad=True`). Setting `threshold=0` matched our hand version to within 2.5e-3; the residual is frame-edge handling.
+- **RMS vs ZCR independence** — loudness (RMS) and brightness (ZCR) measure *different* things: a loud tonal hum can have low ZCR, a quiet hiss high ZCR. The scatter plot of the two per-frame values is a blob for exactly that reason.
 
 ## 05_spectrogram.py
 
