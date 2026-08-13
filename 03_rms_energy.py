@@ -39,13 +39,13 @@ def main() -> None:
         seg = mine[int(b * per_block): int((b + 1) * per_block)]
         bar = "#" * int(round(seg.mean() / mine.max() * 50))
         print(f"  {b * per_block * HOP / sr:5.0f}s  {bar}")
-
+    sample_times = np.arange(len(y)) / sr
     times = librosa.frames_to_time(np.arange(len(mine)), sr=sr, hop_length=HOP)
     fig, axes = plt.subplots(2, 1, figsize=(12, 6), sharex=True)
-    axes[0].plot(librosa.times_like(y, sr=sr)[::20], y[::20], linewidth=0.3)
+    axes[0].plot(sample_times[::20], y[::20], linewidth=0.3)
     axes[0].set_title("Waveform")
     axes[1].plot(times, librosas, linewidth=1.0)
-    axes[1].set_title("RMS energy envelope")
+    axes[1].set_title("RMS energy over time")
     axes[1].set_xlabel("time (seconds)")
     plt.tight_layout()
     out = "plots/03_rms_energy.png"
