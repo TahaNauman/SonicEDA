@@ -1,14 +1,10 @@
 """Step 5: the spectrogram - at each moment, how loud is each frequency?"""
 
+from config import AUDIO_FILE, ROOT, FRAME, HOP, SR
 from pathlib import Path
 import librosa
 import numpy as np
 import matplotlib.pyplot as plt
-
-AUDIO_FILE = Path("data/Pokemon.mp3")
-FRAME = 2048
-HOP = 1024
-SR = 22050
 
 def synth(freq_hz: float, sr: int, seconds: float) -> np.ndarray:
     """A pure tone: a sine wave that completes freq_hz oscillations per second."""
@@ -69,7 +65,7 @@ def main() -> None:
     plt.colorbar(img, label="loudness (dB)")
     plt.title("Spectrogram: loudness of each frequency over time")
     plt.tight_layout()
-    out = "plots/05_spectrogram.png"
+    out = ROOT / "plots" / "05_spectrogram.png"
     plt.savefig(out, dpi=100)
     print(f"\nsaved {out}")
 

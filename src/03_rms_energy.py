@@ -1,13 +1,10 @@
 """Step 3: RMS energy - loudness as a curve over time, not one flat number."""
 
+from config import AUDIO_FILE, ROOT, FRAME, HOP
 from pathlib import Path
 import librosa
 import numpy as np
 import matplotlib.pyplot as plt
-
-AUDIO_FILE = Path("data/Pokemon.mp3")
-FRAME = 2048   # samples per window (~93 ms at 22050 Hz)
-HOP = 1024     # steps between windows (50% overlap)
 
 def load(path: Path, sr: int = 22050):
     return librosa.load(path, sr=sr)
@@ -48,7 +45,7 @@ def main() -> None:
     axes[1].set_title("RMS energy over time")
     axes[1].set_xlabel("time (seconds)")
     plt.tight_layout()
-    out = "plots/03_rms_energy.png"
+    out = ROOT / "plots" / "03_rms_energy.png"
     plt.savefig(out, dpi=100)
     print(f"\nsaved {out}")
 

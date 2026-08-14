@@ -1,10 +1,9 @@
 """Step 2: the raw samples - what does the sound look like as numbers?"""
 
+from config import AUDIO_FILE, ROOT
 from pathlib import Path
 import librosa
 import matplotlib.pyplot as plt
-
-AUDIO_FILE = Path("data/Pokemon.mp3")
 
 def load_audio(path: Path, sr: int = 22050):
     """Decode the file into samples. y = amplitudes (loudness per instant), sr = samples/sec."""
@@ -40,7 +39,7 @@ def main() -> None:
     print("A close-up of the first second of audio (samples 0..15):")
     view_samples(y, 0, 16)
 
-    plot_waveform(y, sr, "plots/02_waveform.png")
+    plot_waveform(y, sr, ROOT / "plots" / "02_waveform.png")
 
     print("\nDone. Open plots/02_waveform.png to see the sound as a picture.")
 

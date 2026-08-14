@@ -1,13 +1,10 @@
 """Step 4: zero crossings - how often does the signal flip sign? A rough brightness meter."""
 
+from config import AUDIO_FILE, ROOT, FRAME, HOP
 from pathlib import Path
 import librosa
 import numpy as np
 import matplotlib.pyplot as plt
-
-AUDIO_FILE = Path("data/Pokemon.mp3")
-FRAME = 2048
-HOP = 1024
 
 def load(path: Path, sr: int = 22050):
     return librosa.load(path, sr=sr)
@@ -54,7 +51,7 @@ def main() -> None:
     axes[1].set_xlabel("RMS")
     axes[1].set_ylabel("Zero-Crossing Rate")
     plt.tight_layout()
-    out = "plots/04_zero_crossings.png"
+    out = ROOT / "plots" / "04_zero_crossings.png"
     plt.savefig(out, dpi=100)
     print(f"\nsaved {out}")
 

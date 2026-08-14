@@ -1,14 +1,9 @@
 """Step 6: feature extraction - distilling the song into meaningful numbers."""
 
-from pathlib import Path
+from config import AUDIO_FILE, ROOT, SR, FRAME, HOP
 import librosa
 import numpy as np
 import matplotlib.pyplot as plt
-
-AUDIO_FILE = Path("data/Pokemon.mp3")
-SR = 22050
-FRAME = 2048
-HOP = 1024
 
 def report(name: str, value: str) -> None:
     print(f"{name:>22} : {value}")
@@ -73,7 +68,7 @@ def main() -> None:
     plt.colorbar(img, ax=axes[1, 1])
 
     plt.tight_layout()
-    out = "plots/06_features.png"
+    out = ROOT / "plots" / "06_features.png"
     plt.savefig(out, dpi=100)
     print(f"\nsaved {out}")
 

@@ -1,16 +1,12 @@
 """Step 6C: MFCCs - a compact numerical description of timbre."""
 
+from config import AUDIO_FILE, ROOT, SR, FRAME, HOP
 from pathlib import Path
+
 import matplotlib.pyplot as plt
 import librosa.display
 import librosa
 import numpy as np
-
-AUDIO_FILE = Path("data/Pokemon.mp3")
-
-SR = 22050
-FRAME = 2048
-HOP = 1024
 
 
 def load_audio(path: Path, sr: int = SR):
@@ -84,7 +80,7 @@ def main() -> None:
 
     plt.tight_layout()
 
-    out = "plots/06c_mfcc.png"
+    out = ROOT / "plots" / "06c_mfcc.png"
     plt.savefig(out, dpi=100)
 
     plt.figure(figsize=(12, 6))
@@ -105,7 +101,7 @@ def main() -> None:
 
     plt.tight_layout()
 
-    out = "plots/06c_mfcc_lines.png"
+    out = ROOT / "plots" / "06c_mfcc_lines.png"
     plt.savefig(out, dpi=100)
 
     print(f"saved {out}")

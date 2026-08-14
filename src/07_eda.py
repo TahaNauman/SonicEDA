@@ -1,17 +1,11 @@
 """Step 7: EDA - aligning all features into one table and asking it questions."""
 
-from pathlib import Path
+from config import AUDIO_FILE, ROOT, SR, FRAME, HOP, PITCH_NAMES
 import librosa
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-
-AUDIO_FILE = Path("data/Pokemon.mp3")
-SR = 22050
-FRAME = 2048
-HOP = 1024
-CHROMA_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
 
 def build_frame_table(y, sr: int) -> pd.DataFrame:
     """Every feature aligned to the same frame grid = one table row per moment."""
@@ -29,7 +23,7 @@ def build_frame_table(y, sr: int) -> pd.DataFrame:
     }
 
     chroma = librosa.feature.chroma_cqt(y=y, sr=sr, hop_length=hop)
-    cols["chroma"] = [CHROMA_NAMES[np.argmax(c)] for c in chroma.T[:n_frames]]
+    cols["chroma"] = [PITCH_NAMES[np.argmax(c)] for c in chroma.T[:n_frames]]
     return pd.DataFrame(cols)
 
 def main() -> None:
@@ -69,7 +63,7 @@ def main() -> None:
     df[["rms", "zcr", "centroid_hz", "rolloff_hz", "bandwidth_hz"]].plot.box(ax=axes[1, 1], rot=20)
     axes[1, 1].set_title("Feature distributions (boxplots)")
     plt.tight_layout()
-    out = "plots/07_eda.png"
+    out = ROOT / "plots" / "07_eda.png"
     plt.savefig(out, dpi=100)
     print(f"\nsaved {out}")
 

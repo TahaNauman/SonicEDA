@@ -1,11 +1,9 @@
-from pathlib import Path
+from config import AUDIO_FILE, ROOT, SR
+
 import matplotlib.pyplot as plt
 
 import librosa
 import numpy as np
-
-AUDIO_FILE = Path("data/Pokemon.mp3")
-SR = 22050
 
 
 def main():
@@ -73,7 +71,7 @@ def main():
     plt.tight_layout()
 
     plt.savefig(
-        "plots/06a_tempo_beats.png",
+        ROOT / "plots" / "06a_tempo_beats.png",
         dpi=100
     )
 

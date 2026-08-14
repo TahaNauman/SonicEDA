@@ -1,11 +1,11 @@
-"""Step 2b: does the sample rate choice (22050 vs 44100) change what we get?"""
+"""Step 2a: does the sample rate choice (22050 vs 44100) change what we get?"""
 
+from config import AUDIO_FILE, ROOT
 from pathlib import Path
 import time
 import librosa
 import matplotlib.pyplot as plt
 
-AUDIO_FILE = Path("data/Pokemon.mp3")
 SLICE = (30.0, 32.0)  # compare the same 2 seconds at both rates
 
 def load(path: Path, sr=None):
@@ -43,7 +43,7 @@ def main() -> None:
     axes[1].set_xlabel("time (seconds)")
     fig.suptitle("The same 2 seconds at both sample rates -- look identical")
     plt.tight_layout()
-    out = "plots/02b_waveforms.png"
+    out = ROOT / "plots" / "02a_waveforms.png"
     plt.savefig(out, dpi=100)
     print(f"\nsaved {out}")
 

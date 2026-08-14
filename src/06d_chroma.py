@@ -1,33 +1,12 @@
 """Step 6D: Chroma - pitch-class energy over time."""
 
+from config import AUDIO_FILE, ROOT, SR, HOP, PITCH_NAMES
 from pathlib import Path
 
 import librosa
 import librosa.display
 import matplotlib.pyplot as plt
 import numpy as np
-
-
-AUDIO_FILE = Path("data/Pokemon.mp3")
-
-SR = 22050
-HOP = 1024
-
-
-PITCH_NAMES = [
-    "C",
-    "C#",
-    "D",
-    "D#",
-    "E",
-    "F",
-    "F#",
-    "G",
-    "G#",
-    "A",
-    "A#",
-    "B",
-]
 
 
 def load_audio(path: Path, sr: int = SR):
@@ -101,7 +80,7 @@ def main() -> None:
 
     plt.tight_layout()
 
-    out = "plots/06d_chroma.png"
+    out = ROOT / "plots" / "06d_chroma.png"
     plt.savefig(out, dpi=100)
 
     print(f"\nsaved {out}")

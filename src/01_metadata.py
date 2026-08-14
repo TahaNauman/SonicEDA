@@ -1,9 +1,8 @@
 """Step 1: what does the file itself tell us about the song?"""
 
+from config import AUDIO_FILE
 from pathlib import Path
 import librosa
-
-AUDIO_FILE = Path("data/Pokemon.mp3")
 
 def file_stats(path: Path) -> dict:
     """File-level info, no audio decoding needed."""

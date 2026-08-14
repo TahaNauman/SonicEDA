@@ -1,13 +1,8 @@
-from pathlib import Path
+from config import AUDIO_FILE, ROOT, SR, FRAME, HOP
+
 import matplotlib.pyplot as plt
 import librosa
 import numpy as np
-
-AUDIO_FILE = Path("data/Pokemon.mp3")
-
-SR = 22050
-FRAME = 2048
-HOP = 1024
 
 
 def main():
@@ -71,7 +66,7 @@ def main():
     plt.title("Spectral Centroid — Frequency Brightness Over Time")
     plt.tight_layout()
 
-    out = "plots/06b_spectral_centroid.png"
+    out = ROOT / "plots" / "06b_spectral_centroid.png"
     plt.savefig(out, dpi=100)
     plt.show()
 
@@ -84,7 +79,7 @@ def main():
     plt.title("Spectral Rolloff — Frequency Below Which 85% of Energy Lies")
     plt.tight_layout()
 
-    out = "plots/06b_spectral_rolloff.png"
+    out = ROOT / "plots" / "06b_spectral_rolloff.png"
     plt.savefig(out, dpi=100)
     plt.show()
 
@@ -97,7 +92,7 @@ def main():
     plt.title("Spectral Bandwidth — Spread of Frequency Content")
     plt.tight_layout()
 
-    out = "plots/06b_spectral_bandwidth.png"
+    out = ROOT / "plots" / "06b_spectral_bandwidth.png"
     plt.savefig(out, dpi=100)
     plt.show()
 
