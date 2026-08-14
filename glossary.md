@@ -89,10 +89,6 @@ Distilling the song into a small set of meaningful numbers — the "fingerprint.
 - **Chroma** — energy in each of the 12 pitch classes (C..B). Pokemon.mp3 leans D, F, G → its tonal/harmonic emphasis. Not a proof of key, but a real measure of which notes dominate.
 - **`librosa.frames_to_time`** — converts beat/frame indices back to seconds for plotting on the time axis.
 
-## 07_eda.py
-
-*(not yet built)*
-
 ## 08_visualize.py
 
 *(not yet built)*
