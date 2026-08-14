@@ -20,8 +20,3 @@ venv/
 env/
 ENV/
 
-# Generated plots/results
-plots/*.png
-plots/*.pdf
-plots/*.svg
-plots/*.html
