@@ -36,5 +36,3 @@ pip install -r requirements.txt
 | 5 | `05_spectrogram.py` | frequencies over time (STFT) |
 | 6 | `06_features.py` | tempo, beats, spectral stats, MFCCs, chroma |
 | 7 | `07_eda.py` | all features in a pandas DataFrame |
-| 8 | `08_visualize.py` | plots of each feature |
-| 9 | `09_summary.py` | plain-language menu of all features |
