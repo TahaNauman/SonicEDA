@@ -61,7 +61,19 @@ How often the signal flips sign — a cheap brightness/timbre measurement.
 
 ## 05_spectrogram.py
 
-*(not yet built)*
+At each moment, how loud is each frequency? The "money picture" of the project.
+
+- **Frequency (Hz)** — how many oscillations per second; the pitch of a note. 440 Hz = musical A4.
+- **Sine wave / pure tone** — a wave of a single frequency; the "atom" of sound. `np.sin(2 * np.pi * freq * t)`.
+- **Superposition** — music is many pure tones *added together*. 440 + 880 Hz sums into a jagged wave that is neither but contains both.
+- **Correlation (the heart of Fourier)** — slide a candidate tone across the signal and measure how well it fits (dot product). High match (0.50) = that tone is in the sound; near-zero (0.00) = it isn't. Scanning this across all frequencies IS the Fourier transform.
+- **Fourier transform** — decomposes a chunk of sound into "which frequencies, and how loud each one." Doesn't add or remove information; just re-expresses it in terms of pure tones.
+- **STFT (Short-Time Fourier Transform)** — the Fourier transform applied to overlapping frames (same framing as steps 3–4), producing a matrix of frequency × time. `librosa.stft(y, n_fft, hop_length)`.
+- **STFT matrix** — here (1,025 freq bins × 4,248 time frames): 1,025 frequencies measured every 46 ms.
+- **Frequency bin / resolution** — how finely the frequency axis is sliced; `sr / n_fft` = 10.8 Hz per bin here. Longer frames = finer frequency, coarser time (the fundamental resolution tradeoff).
+- **dB (decibel) / log scale** — `amplitude_to_db` compresses the huge range of loudness so quiet AND loud details are both visible on the heatmap.
+- **Spectrogram** — the resulting picture: x = time, y = frequency, color = loudness. Reading it: bright bottom bands = bass, upper regions = harmonic detail; a bright vertical line = a loud moment.
+- **Reality anchor** — at 56.6 s (step 3's climax) the song is mostly 86 Hz (deep bass) + 850/904 Hz (bright body): "loud" = a stack of specific frequencies, not one number.
 
 ## 06_features.py
 
