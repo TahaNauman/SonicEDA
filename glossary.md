@@ -77,7 +77,17 @@ At each moment, how loud is each frequency? The "money picture" of the project.
 
 ## 06_features.py
 
-*(not yet built)*
+Distilling the song into a small set of meaningful numbers — the "fingerprint."
+
+- **Feature** — a number (or short array) that summarizes raw data. The whole song (4.3M samples) compresses into ~7 headline numbers: tempo, beats, centroid, rolloff, bandwidth, 13 MFCCs, 12 chroma values.
+- **Tempo (BPM)** — beats per minute; the speed/danceability. Pokemon.mp3 = 143.6 BPM = fast/upbeat.
+- **Beat tracking** — `librosa.beat.beat_track` finds where the pulse lands (466 beats over 197 s). Returns a 2-tuple `(tempo, beat_frames)`; tempo is a 1-element array here, so flatten with `float(np.asarray(tempo).mean())`.
+- **Spectral centroid** — the "center of mass" of the spectrum (weighted average frequency). Higher = brighter. 2,362 Hz avg, peaking at ~6.4 kHz.
+- **Spectral rolloff** — the frequency below which ~85% of the energy sits. 5,324 Hz here → the bright energy is concentrated, not spread wide.
+- **Spectral bandwidth** — how spread out the energy is around the centroid. 2,589 Hz → a fairly centered/tonal sound.
+- **MFCC (Mel-frequency cepstral coefficients)** — 13 coefficients capturing *timbre* (vocal/instrument color). Survives compression and identifies "what kind of voice/gear" — the classic sound fingerprint. Coefficient 0 = overall energy; the rest encode spectral shape.
+- **Chroma** — energy in each of the 12 pitch classes (C..B). Pokemon.mp3 leans D, F, G → its tonal/harmonic emphasis. Not a proof of key, but a real measure of which notes dominate.
+- **`librosa.frames_to_time`** — converts beat/frame indices back to seconds for plotting on the time axis.
 
 ## 07_eda.py
 
