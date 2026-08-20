@@ -1,7 +1,6 @@
 """Step 5: the spectrogram - at each moment, how loud is each frequency?"""
 
 from config import AUDIO_FILE, ROOT, FRAME, HOP, SR
-from pathlib import Path
 import librosa
 import numpy as np
 import matplotlib.pyplot as plt
