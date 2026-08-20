@@ -1,3 +1,5 @@
+"""Step 6A: tempo and beat tracking - the pulse of the song."""
+
 from config import AUDIO_FILE, ROOT, SR, FRAME, HOP
 
 import matplotlib.pyplot as plt
@@ -75,6 +77,5 @@ def main():
         dpi=100
     )
 
-    plt.show()
 if __name__ == "__main__":
     main()

@@ -1,3 +1,5 @@
+"""Step 6B: spectral features - centroid, rolloff, and bandwidth."""
+
 from config import AUDIO_FILE, ROOT, SR, FRAME, HOP
 
 import matplotlib.pyplot as plt
@@ -68,7 +70,6 @@ def main():
 
     out = ROOT / "plots" / "06b_spectral_centroid.png"
     plt.savefig(out, dpi=100)
-    plt.show()
 
 
     # 2. Spectral rolloff
@@ -81,7 +82,6 @@ def main():
 
     out = ROOT / "plots" / "06b_spectral_rolloff.png"
     plt.savefig(out, dpi=100)
-    plt.show()
 
 
     # 3. Spectral bandwidth
@@ -94,7 +94,6 @@ def main():
 
     out = ROOT / "plots" / "06b_spectral_bandwidth.png"
     plt.savefig(out, dpi=100)
-    plt.show()
 
 
 if __name__ == "__main__":
