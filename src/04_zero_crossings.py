@@ -31,7 +31,7 @@ def main() -> None:
         y, frame_length=FRAME, hop_length=HOP, center=False, threshold=0.0
     )[0]
     n = min(len(fimine), len(filib))
-    print(f"per-frame rate: max |diff| vs librosa = {np.abs(fimine[:n] - filib[:n]).max():.2e}  (tiny residual = frame-edge handling)")
+    print(f"per-frame rate: max |diff| vs librosa = {np.abs(fimine[:n] - filib[:n]).max():.2e}  (tiny residual = librosa needs a strict sign change, ours also counts exact-zero samples as crossings)")
     print(f"Highest ZCR at {np.argmax(fimine) * HOP / sr:.1f}s (rate {fimine.max():.3f})")
     print(f"Lowest ZCR at {np.argmin(fimine) * HOP / sr:.1f}s (rate {fimine.min():.3f})")
 
