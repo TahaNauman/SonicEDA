@@ -1,6 +1,6 @@
 """Step 6: feature extraction - distilling the song into meaningful numbers."""
 
-from config import AUDIO_FILE, ROOT, SR, FRAME, HOP
+from config import AUDIO_FILE, ROOT, SR, FRAME, HOP, PITCH_NAMES
 import librosa
 import numpy as np
 import matplotlib.pyplot as plt
@@ -37,10 +37,9 @@ def main() -> None:
 
     # --- chroma (12 pitch classes) --------------------------------------
     chroma = librosa.feature.chroma_cqt(y=y, sr=sr, hop_length=HOP)
-    names = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
     strongest = np.argsort(chroma.mean(axis=1))[-3:][::-1]
     report("chroma", "strongest pitch classes: "
-                     + ", ".join(f"{names[i]} ({chroma.mean(axis=1)[i]:.2f})" for i in strongest)
+                     + ", ".join(f"{PITCH_NAMES[i]} ({chroma.mean(axis=1)[i]:.2f})" for i in strongest)
                      + "  <- harmony/tonal emphasis")
 
     # --- plots -----------------------------------------------------------
