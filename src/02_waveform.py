@@ -1,13 +1,8 @@
 """Step 2: the raw samples - what does the sound look like as numbers?"""
 
-from config import AUDIO_FILE, ROOT
-from pathlib import Path
+from config import AUDIO_FILE, ROOT, SR
 import librosa
 import matplotlib.pyplot as plt
-
-def load_audio(path: Path, sr: int = 22050):
-    """Decode the file into samples. y = amplitudes (loudness per instant), sr = samples/sec."""
-    return librosa.load(path, sr=sr)
 
 def view_samples(y, start: int, count: int) -> None:
     """Print raw values to see the actual numbers the sound is made of."""
@@ -28,7 +23,7 @@ def plot_waveform(y, sr: int, out_file: str) -> None:
     print(f"  saved plot to {out_file}")
 
 def main() -> None:
-    y, sr = load_audio(AUDIO_FILE)
+    y, sr = librosa.load(AUDIO_FILE, sr=SR)
 
     print(f"decoded: {len(y):,} samples at {sr} Hz")
     print(f"loudest sample : {y.max():+.4f}")

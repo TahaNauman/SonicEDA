@@ -1,13 +1,9 @@
 """Step 4: zero crossings - how often does the signal flip sign? A rough brightness meter."""
 
-from config import AUDIO_FILE, ROOT, FRAME, HOP
-from pathlib import Path
+from config import AUDIO_FILE, ROOT, FRAME, HOP, SR
 import librosa
 import numpy as np
 import matplotlib.pyplot as plt
-
-def load(path: Path, sr: int = 22050):
-    return librosa.load(path, sr=sr)
 
 def zcr_by_hand(y) -> float:
     """Fraction of samples that flip sign versus their neighbor."""
@@ -22,7 +18,7 @@ def zcr_frames_by_hand(y, frame_length: int, hop_length: int) -> np.ndarray:
     return flips
 
 def main() -> None:
-    y, sr = load(AUDIO_FILE)
+    y, sr = librosa.load(AUDIO_FILE, sr=SR)
 
     mine = zcr_by_hand(y)
     librosas = librosa.feature.zero_crossing_rate(y)[0].mean()

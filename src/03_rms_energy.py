@@ -1,13 +1,9 @@
 """Step 3: RMS energy - loudness as a curve over time, not one flat number."""
 
-from config import AUDIO_FILE, ROOT, FRAME, HOP
-from pathlib import Path
+from config import AUDIO_FILE, ROOT, FRAME, HOP, SR
 import librosa
 import numpy as np
 import matplotlib.pyplot as plt
-
-def load(path: Path, sr: int = 22050):
-    return librosa.load(path, sr=sr)
 
 def rms_by_hand(y, frame_length: int, hop_length: int) -> np.ndarray:
     """RMS per frame, written out so the math is visible."""
@@ -17,7 +13,7 @@ def rms_by_hand(y, frame_length: int, hop_length: int) -> np.ndarray:
     return np.sqrt(np.mean(frames**2, axis=1))
 
 def main() -> None:
-    y, sr = load(AUDIO_FILE)
+    y, sr = librosa.load(AUDIO_FILE, sr=SR)
 
     mine = rms_by_hand(y, FRAME, HOP)
     librosas = librosa.feature.rms(y=y, frame_length=FRAME, hop_length=HOP, center=False)[0]
