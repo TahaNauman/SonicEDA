@@ -17,14 +17,18 @@ def main() -> None:
     tempo, beat_frames = librosa.beat.beat_track(y=y, sr=sr)
     tempo = float(np.asarray(tempo).mean())
     beat_times = librosa.frames_to_time(beat_frames, sr=sr)
+    if len(beat_times):
+        beats_str = f"{len(beat_times)} pulse points over {y.shape[0] / sr:.0f}s "
+        f"(first at {beat_times[0]:.2f}s, last at {beat_times[-1]:.2f}s)"
+    else:
+        beats_str = "no beats detected"
     report("tempo (BPM)", f"{float(tempo):.1f} beats per minute")
-    report("beats", f"{len(beat_times)} pulse points over {y.shape[0] / sr:.0f}s "
-                    f"(first at {beat_times[0]:.2f}s, last at {beat_times[-1]:.2f}s)")
+    report("beats", beats_str)
 
     # --- spectral features (built on the step-5 spectrogram) -------------
-    centroid = librosa.feature.spectral_centroid(y=y, sr=sr, n_fft=FRAME, hop_length=HOP)[0]
-    rolloff = librosa.feature.spectral_rolloff(y=y, sr=sr, n_fft=FRAME, hop_length=HOP)[0]
-    bandwidth = librosa.feature.spectral_bandwidth(y=y, sr=sr, n_fft=FRAME, hop_length=HOP)[0]
+    centroid = librosa.feature.spectral_centroid(y=y, sr=sr, n_fft=FRAME, hop_length=HOP, center=False)[0]
+    rolloff = librosa.feature.spectral_rolloff(y=y, sr=sr, n_fft=FRAME, hop_length=HOP, center=False)[0]
+    bandwidth = librosa.feature.spectral_bandwidth(y=y, sr=sr, n_fft=FRAME, hop_length=HOP, center=False)[0]
     report("spectral centroid", f"{centroid.mean():6.0f} Hz avg brightness "
                                 f"(min {centroid.min():.0f}, max {centroid.max():.0f})")
     report("spectral rolloff", f"{rolloff.mean():6.0f} Hz avg - 85% of energy is below this")
