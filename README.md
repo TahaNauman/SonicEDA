@@ -72,6 +72,8 @@ SonicEDA/
 │   ├── 06c_mfcc.py
 │   ├── 06d_chroma.py
 │   └── 07_eda.py
+├── glossary.md         # plain-language definitions of every concept
+├── LICENSE             # MIT
 └── requirements.txt
 ```
 
@@ -79,7 +81,8 @@ Each script is a standalone stage of the pipeline. The scripts share common
 constants — the audio file path, sample rate, and frame settings — defined once
 in `src/config.py`. Feature extraction is covered together in `06_features.py`,
 with `06a`–`06d` providing more focused per-feature stages (tempo, spectral
-features, MFCCs, chroma).
+features, MFCCs, chroma). A [glossary](glossary.md) defines every concept in
+plain language.
 
 ## Analysis
 
@@ -122,7 +125,7 @@ Together, these features provide a compact numerical representation of different
 
 ### 7. Exploratory Data Analysis
 
-All frame-level features are aligned into a single DataFrame — 4,246 rows (one per ~46 ms of audio) across 8 feature columns. Standard EDA follows: summary statistics, distributions, correlations, how features change across sections of the song, and per-second profiles.
+All frame-level features are aligned into a single DataFrame — 4,246 rows (one per ~46 ms of audio) across 7 feature columns. Standard EDA follows: summary statistics, distributions, correlations, how features change across sections of the song, and per-second profiles.
 
 ![EDA visualizations](plots/07_eda.png)
 
@@ -149,9 +152,9 @@ The analysis used `Pokemon.mp3` (197.25 seconds, loaded at 22,050 Hz, 4,246 fram
 
 | Feature | Mean | Range |
 |---|---|---|
-| Spectral centroid | 2,362 Hz | 0 – 6,439 Hz |
-| Spectral rolloff | 5,324 Hz | — |
-| Spectral bandwidth | 2,589 Hz | — |
+| Spectral centroid | 2,363 Hz | 0 – 6,439 Hz |
+| Spectral rolloff | 5,327 Hz | — |
+| Spectral bandwidth | 2,591 Hz | — |
 
 **Chroma:** the strongest average pitch classes were D (0.700), F (0.588), and G (0.580), indicating where the song's tonal energy concentrates.
 
@@ -162,10 +165,9 @@ The analysis used `Pokemon.mp3` (197.25 seconds, loaded at 22,050 Hz, 4,246 fram
 | Rolloff ↔ Bandwidth | +0.937 |
 | Centroid ↔ Rolloff | +0.927 |
 | Centroid ↔ Bandwidth | +0.833 |
-| ZCR ↔ Centroid | +0.745 |
-| RMS ↔ MFCC0 | +0.571 |
-| RMS ↔ ZCR | −0.454 |
-| RMS ↔ Centroid | −0.266 |
+| ZCR ↔ Centroid | +0.844 |
+| RMS ↔ MFCC0 | +0.612 |
+| RMS ↔ Centroid | −0.304 |
 
 The high positive correlations among centroid, rolloff, and bandwidth indicate they are strongly related spectral descriptors — they capture related but different aspects of the frequency distribution. The −0.454 RMS/ZCR correlation is a moderate inverse relationship in this particular recording: frames with greater RMS energy tended on average to have lower zero-crossing rates. This is an observation about this song, not a universal property of audio.
 
@@ -205,7 +207,8 @@ This project is primarily an **audio data analysis / Music Information Retrieval
 
    ```bash
    python -m venv .venv
-   .venv\Scripts\activate
+   .venv\Scripts\activate   # Windows
+   source .venv/bin/activate  # macOS / Linux
    pip install -r requirements.txt
    ```
 
@@ -227,7 +230,11 @@ This project is primarily an **audio data analysis / Music Information Retrieval
    python src/04_zero_crossings.py
    python src/05_spectrogram.py
    python src/06_features.py
+   python src/06a_tempo.py
+   python src/06b_spectral.py
+   python src/06c_mfcc.py
+   python src/06d_chroma.py
    python src/07_eda.py
    ```
 
-   Visualizations are written to the `plots/` directory.
+   Visualizations are written to the `plots/` directory. `06_features.py` covers feature extraction end-to-end; `06a`–`06d` are optional per-feature deep-dives that produce the same features one at a time.
