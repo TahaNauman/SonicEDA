@@ -1,4 +1,4 @@
-from config import AUDIO_FILE, ROOT, SR
+from config import AUDIO_FILE, ROOT, SR, FRAME, HOP
 
 import matplotlib.pyplot as plt
 
@@ -32,15 +32,15 @@ def main():
 
     rms = librosa.feature.rms(
         y=y,
-        frame_length=2048,
-        hop_length=1024,
+        frame_length=FRAME,
+        hop_length=HOP,
         center=False
     )[0]
 
     rms_times = librosa.frames_to_time(
         np.arange(len(rms)),
         sr=sr,
-        hop_length=1024
+        hop_length=HOP
     )
 
     plt.figure(figsize=(14, 4))
