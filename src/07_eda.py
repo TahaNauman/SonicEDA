@@ -16,10 +16,10 @@ def build_frame_table(y, sr: int) -> pd.DataFrame:
         "time_s": np.arange(n_frames) * hop / sr,
         "rms": librosa.feature.rms(y=y, frame_length=FRAME, hop_length=hop, center=False)[0, :n_frames],
         "zcr": librosa.feature.zero_crossing_rate(y, frame_length=FRAME, hop_length=hop, center=False, threshold=0.0)[0, :n_frames],
-        "centroid_hz": librosa.feature.spectral_centroid(y=y, sr=sr, n_fft=FRAME, hop_length=hop)[0, :n_frames],
-        "rolloff_hz": librosa.feature.spectral_rolloff(y=y, sr=sr, n_fft=FRAME, hop_length=hop)[0, :n_frames],
-        "bandwidth_hz": librosa.feature.spectral_bandwidth(y=y, sr=sr, n_fft=FRAME, hop_length=hop)[0, :n_frames],
-        "mfcc0": librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13, n_fft=FRAME, hop_length=hop)[0, :n_frames],
+        "centroid_hz": librosa.feature.spectral_centroid(y=y, sr=sr, n_fft=FRAME, hop_length=hop, center=False)[0, :n_frames],
+        "rolloff_hz": librosa.feature.spectral_rolloff(y=y, sr=sr, n_fft=FRAME, hop_length=hop, center=False)[0, :n_frames],
+        "bandwidth_hz": librosa.feature.spectral_bandwidth(y=y, sr=sr, n_fft=FRAME, hop_length=hop, center=False)[0, :n_frames],
+        "mfcc0": librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13, n_fft=FRAME, hop_length=hop, center=False)[0, :n_frames],
     }
 
     chroma = librosa.feature.chroma_cqt(y=y, sr=sr, hop_length=hop)
